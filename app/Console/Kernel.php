@@ -29,7 +29,8 @@ class Kernel extends ConsoleKernel
 
     protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
     {
-        $shortSchedule->command('check:tick')->everySeconds(5);
+        /*$shortSchedule->command('check:tick')->everySeconds(5);*/
+        $shortSchedule->command('watchers:tick')->everySeconds(5);
     }
 
     /**

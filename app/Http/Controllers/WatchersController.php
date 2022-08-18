@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Watcher;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use App\Repositories\WatcherRepository;
+use App\Interfaces\WatcherRepositoryInterface;
 
 class WatchersController extends Controller
 {
-    private WatcherRepository $watcherRepository;
+    private WatcherRepositoryInterface $watcherRepository;
 
-    public function __construct(WatcherRepository $watcherRepository)
+    public function __construct(WatcherRepositoryInterface $watcherRepository)
     {
         $this->watcherRepository = $watcherRepository;
     }
@@ -33,7 +33,7 @@ class WatchersController extends Controller
             'symbol' => ['required', 'string', 'min:2', 'max:8', 'uniqueWith:watchers,symbol,user_id,'.$user->id]
         ]);
 
-        $this->watcherRepository->createWatcher($user, $request->input('symbol'));
+        $this->watcherRepository->create($user, $request->input('symbol'));
 
         return redirect()->route('watchers.index');
 

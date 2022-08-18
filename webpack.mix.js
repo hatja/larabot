@@ -15,3 +15,4 @@ mix.js('resources/js/app.js', 'public/js').js('resources/js/stream.js', 'public/
     require('tailwindcss'),
     require('autoprefixer'),
 ]);
+

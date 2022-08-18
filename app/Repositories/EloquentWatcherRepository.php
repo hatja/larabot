@@ -5,27 +5,32 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\Watcher;
+use App\Interfaces\WatcherRepositoryInterface;
 
-class WatcherRepository
+class EloquentWatcherRepository implements WatcherRepositoryInterface
 {
-    public function getWatchersByUser(User $user)
+    public function getAllByUser(User $user)
     {
         return $user->watchers()->orderBy('order', 'asc')->get();
     }
 
-    public function getWatcherById($watcherId)
+    public function getById($watcherId)
     {
         return Watcher::findOrFail($watcherId);
     }
 
-    public function updateWatcher($watcherId, $params)
+    public function updatePriceById($watcherId, $price)
     {
         $watcher = Watcher::findOrFail($watcherId);
-        return $watcher->update($params);
-       /* foreach($params as $key => $val) {
-            $watcher->$key = $val;
-            $watcher->save();
-        }*/
+        return $watcher->update(['price' => $price]);
+    }
+
+    public function updatePriceBySymbol($symbol, $price)
+    {
+        $watcher = Watcher::where('symbol', 'LIKE', $symbol)->firstOrFail();
+        $watcher->update(['price' => $price]);
+
+        return $watcher;
     }
 
     public function archivatePrice($watcherId, $price)
@@ -38,12 +43,12 @@ class WatcherRepository
         return Watcher::destroy($watcherId);
     }
 
-    public function createWatcher(User $user, string $symbol)
+    public function create(array $params)
     {
-        return Watcher::create(['user_id' => $user->id, 'symbol' => $symbol]);
+        return Watcher::create($params);
     }
 
-    public function reorderUserWatchers(User $user)
+   /* public function reorderUserWatchers(User $user)
     {
         $watchers = $this->getWatchersByUser($user);
         $hasOne = $watchers->where('order', '=', 1)->first();
@@ -54,5 +59,5 @@ class WatcherRepository
             }
         }
 
-    }
+    }*/
 }

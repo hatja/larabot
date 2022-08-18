@@ -50,7 +50,7 @@ class CheckTicker extends Command
      */
     public function handle()
     {
-        $ticker = $this->api->prices(["BTCUSDT","BNBUSDT"]);
+        $ticker = $this->api->price('ETCUSDT');
         dd($ticker);
         $user = User::first();
         event(new PriceChanged($user, 'sajt'));

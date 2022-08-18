@@ -11,7 +11,27 @@
 
         </div>
         <div class="p-5">
-            Price: <span id="watcher-price-{{$watcher->id}}"></span>
+            <div id="watcher-header-percentage-{{$watcher->id}}" class="text-center small" style="line-height:0;">
+                {!! displayPriceChangeInHistoryCell($watcher->oldPriceChangeData()) !!}
+            </div>
+            <div id="watcher-price-{{$watcher->id}}"
+                 class="price-ticker text-center {{mainPriceChangeColor($watcher)}}">
+                {{customPriceFormat($watcher->price)}}
+            </div>
+            <hr style="margin: 10px 0">
+            <table id="watcher-history-{{$watcher->id}}" class="table-fixed w-full">
+                @foreach($watcher->old_prices as $i => $oldPrice)
+                    @include('partials._watcher_history_row')
+                @endforeach
+            </table>
+
+            {{-- <ul>
+                 @foreach($watcher->old_prices as $oldPrice)
+                     <li><small>+{{$watcher->price_updated - $oldPrice['time']}}s</small>
+                         <strong style="margin-left:1rem;">{{$oldPrice['price']}}</strong></li>
+                 @endforeach
+             </ul>--}}
+            {{--  <span class="price-ticker" id="watcher-price-{{$watcher->id}}">{{$watcher->price}}</span>--}}
         </div>
     </div>
 </div>

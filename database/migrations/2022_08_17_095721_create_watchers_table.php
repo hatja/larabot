@@ -15,15 +15,13 @@ class CreateWatchersTable extends Migration
     {
         Schema::create('watchers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->unsignedBigInteger('user_id');
             $table->string('symbol');
             $table->float('price', 20, 12)->nullable();
             $table->json('old_prices')->nullable();
-            $table->integer('order')->default(1);
+           // $table->integer('order')->default(1);
 
-            $table->timestamp('price_updated')->nullable();
-            $table->softDeletes();
+            $table->bigInteger('price_updated')->nullable();
+           // $table->softDeletes();
             $table->timestamps();
         });
     }

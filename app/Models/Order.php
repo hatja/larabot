@@ -10,8 +10,15 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const SIDE_BUY = 'BUY';
+    const SIDE_SELL = 'SELL';
+
     public $dates = [
-        'created_at', 'updated_at', 'deleted_at'
+        'created_at', 'updated_at', 'deleted_at', 'closed_at'
+    ];
+
+    protected $casts = [
+        'binance_data' => 'array'
     ];
 
 

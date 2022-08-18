@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Http\Resources\WatcherResource;
-use App\Models\Watcher;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,21 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PriceChanged implements ShouldBroadcast
+class PriceChangedPrivate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    public $watcher;
-
+    public $text;
+    public $user;
     /**
      * Create a new event instance.
      *
-     * @param WatcherResource $watcher
+     * @return void
      */
-    public function __construct(WatcherResource $watcher)
+    public function __construct($user, $text)
     {
-        $this->watcher = $watcher;
+        $this->user = $user;
+        $this->text = $text;
     }
 
     /**
@@ -36,7 +35,7 @@ class PriceChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('watchers.' . $this->watcher->id);
+        return new PrivateChannel('watchers.'.$this->user->id);
     }
 
     public function broadcastAs()

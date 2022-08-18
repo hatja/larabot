@@ -42,14 +42,27 @@ class User extends Authenticatable
     ];
 
 
-
     public function watchers()
     {
-        return $this->hasMany(Watcher::class);
+        return $this->belongsToMany(Watcher::class)
+            ->withPivot('order')
+            ->withTimestamps()
+            ->orderByPivot('order')
+            ->orderByPivot('created_at', 'desc');
     }
 
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function openOrders()
+    {
+        return $this->hasMany(Order::class)->where('closed', 0);
+    }
+
+    public function closedOrders()
+    {
+        return $this->hasMany(Order::class)->where('closed', 1);
     }
 }

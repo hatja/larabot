@@ -18,11 +18,14 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('watcher_id');
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->string('type');
+            $table->json('binance_data')->nullable();
+            $table->string('side');
             $table->float('amount', 20, 8);
-            $table->float('current_price', 20, 12);
+            $table->float('price', 20, 12);
             $table->float('value', 20, 12);
+            $table->string('status')->nullable();
             $table->boolean('closed')->default(0);
+            $table->timestamp('closed_at')->nullable();
            // $table->float('profit', 20, 8)->nullable();
 
             $table->softDeletes();

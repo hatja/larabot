@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\WatchersController;
+use App\Http\Controllers\UserWatchersController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 Broadcast::routes();
 
-Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', [WatchersController::class, 'index'])->name('dashboard');
-    Route::resource('watchers', WatchersController::class)
-        ->only(['index', 'store', 'destroy']);
+Route::middleware('auth')->group(function () {
+    Route::get('/', [UserWatchersController::class, 'index'])->name('watchers.index');
+    Route::resource('watchers', UserWatchersController::class)
+        ->only(['store', 'destroy']);
 });
 
 
