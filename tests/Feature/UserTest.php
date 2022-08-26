@@ -24,7 +24,7 @@ class UserTest extends TestCase
 
     public function test_auth()
     {
-     //   $user = User::factory()->create();
+        $user = User::factory()->create();
     }
 
     public function test_logout()

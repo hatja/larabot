@@ -11,7 +11,6 @@ class UserWatcherService
         $this->user = $user;
     }
 
-
     public function getAll()
     {
         return $this->user->watchers;

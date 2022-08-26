@@ -12,7 +12,6 @@ class WatcherObserver
     public function __construct(WatcherRepositoryInterface $watcherRepository)
     {
         $this->repository = $watcherRepository;
-
     }
 
     public function creating(Watcher $watcher)
@@ -32,8 +31,8 @@ class WatcherObserver
 
     public function updated(Watcher $watcher)
     {
-        if ($watcher->isDirty('price')) {
+        /*if ($watcher->isDirty('price')) {
             HandleOrders::dispatch($watcher);
-        }
+        }*/
     }
 }
